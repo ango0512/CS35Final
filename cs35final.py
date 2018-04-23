@@ -27,7 +27,7 @@ import io
 #     text = f.read().lower()
 # print('corpus length:', len(text))
 
-text = open('wonderland.txt', 'r').read()
+text = open('kanye_verses.txt', 'r').read()
 
 chars = sorted(list(set(text)))
 print('total chars:', len(chars))
@@ -36,8 +36,9 @@ indices_char = dict((i, c) for i, c in enumerate(chars))
 
 # cut the text in semi-redundant sequences of maxlen characters
 
-# maxlen is the length of the seed
-maxlen = 40
+# maxlen is the length of the seed. as you increase this, the
+# program takes longer to run
+maxlen = 400
 step = 3
 sentences = []
 next_chars = []
@@ -92,6 +93,7 @@ def on_epoch_end(epoch, logs):
         sys.stdout.write(generated)
         #the integer in the range is how many characters are 
         #in the generated sequence
+        print('----- Generated')
         for i in range(400):
             x_pred = np.zeros((1, maxlen, len(chars)))
             for t, char in enumerate(sentence):
@@ -109,8 +111,8 @@ def on_epoch_end(epoch, logs):
         print()
 
 print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
-
+#20 epochs to get okay results
 model.fit(x, y,
-          batch_size=10,
-          epochs=5,
+          batch_size=128,
+          epochs=20,
           callbacks=[print_callback])
