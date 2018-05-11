@@ -27,7 +27,7 @@ import io
 #     text = f.read().lower()
 # print('corpus length:', len(text))
 
-text = open('kanye_verses.txt', 'r').read()
+text = open('lyricsdataset.txt', 'r').read()
 
 chars = sorted(list(set(text)))
 print('total chars:', len(chars))
@@ -83,7 +83,9 @@ def on_epoch_end(epoch, logs):
     print('----- Generating text after Epoch: %d' % epoch)
 
     start_index = random.randint(0, len(text) - maxlen - 1)
-    for diversity in [0.2, 0.5, 1.0, 1.2]:
+    #diversityList = [0.2, 0.5, 1.0, 1.2]
+    diversityList = [0.2, 0.5]
+    for diversity in diversityList:
         print('----- diversity:', diversity)
 
         generated = ''
@@ -93,7 +95,7 @@ def on_epoch_end(epoch, logs):
         sys.stdout.write(generated)
         #the integer in the range is how many characters are 
         #in the generated sequence
-        print('----- Generated')
+        print('\n======================= Generated======================= ')
         for i in range(400):
             x_pred = np.zeros((1, maxlen, len(chars)))
             for t, char in enumerate(sentence):
@@ -114,5 +116,5 @@ print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
 #20 epochs to get okay results
 model.fit(x, y,
           batch_size=128,
-          epochs=20,
+          epochs=30,
           callbacks=[print_callback])
