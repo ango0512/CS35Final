@@ -92,10 +92,9 @@ def on_epoch_end(epoch, logs):
         sentence = text[start_index: start_index + maxlen]
         generated += sentence
         print('----- Generating with seed: "' + sentence + '"')
-        sys.stdout.write(generated)
         #the integer in the range is how many characters are 
         #in the generated sequence
-        print('\n======================= Generated======================= ')
+        print('\n======================= Generated=======================')
         for i in range(400):
             x_pred = np.zeros((1, maxlen, len(chars)))
             for t, char in enumerate(sentence):
