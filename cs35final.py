@@ -15,7 +15,7 @@ import io
 #     text = f.read().lower()
 # print('corpus length:', len(text))
 
-text = open('lyricsdataset.txt', 'r').read()
+text = open('kanye_verses.txt', 'r').read()
 
 chars = sorted(list(set(text)))
 print('total chars:', len(chars))
